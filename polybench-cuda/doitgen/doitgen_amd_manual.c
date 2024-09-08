@@ -15,7 +15,7 @@ typedef unsigned char bool;
 #if defined(__GNUC__)
 #define  __ATTRIBUTELIST__(x) __attribute__(x)
 #else
-#define  __ATTRIBUTELIST__(x)
+#define  __ATTRIBUTELIST__(x)  
 #endif
 
 #ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
@@ -176,7 +176,7 @@ void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, do
   int64_t j;
   int64_t k;
 
-#pragma omp parallel for
+#pragma omp parallel for collapse(3)
 for(int64_t i = 0; i < nr;   ++i){
 
 for(int64_t j = 0; j < nq;   ++j){
@@ -186,7 +186,7 @@ for(int64_t k = 0; k < np;   ++k){
 }
 }
 }
-#pragma omp parallel for
+#pragma omp parallel for collapse(2)
 for(int64_t i = 0; i < np;   ++i){
 
 for(int64_t j = 0; j < np;   ++j){
@@ -199,11 +199,11 @@ for(int64_t j = 0; j < np;   ++j){
 
 void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4, double* sum) {
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp3;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp3_2e_coerce;    /* Address-exposed local */
+  // struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
+  // struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
+  // struct l_struct_struct_OC_dim3 agg_2e_tmp3;    /* Address-exposed local */
+  // struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
+  // struct l_unnamed_1 agg_2e_tmp3_2e_coerce;    /* Address-exposed local */
   int32_t call;
   int32_t call1;
   int32_t call2;
@@ -223,22 +223,22 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   call = _ZL10num_blocksii(nr, block.field0);
   call1 = _ZL10num_blocksii(nq, block.field1);
   call2 = _ZL10num_blocksii(np, block.field2);
-  grid.field0 = call;
-  grid.field1 = call1;
-  grid.field2 = call2;
-  memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp target teams distribute collapse(2) thread_limit(216)
+  // grid.field0 = call;
+  // grid.field1 = call1;
+  // grid.field2 = call2;
+  // memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
+  // memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
+  // memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  // memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call;   ++i){
 
 for(int32_t j = 0; j < call1;   ++j){
 
 for(int32_t k = 0; k < call2;   ++k){
-
 #pragma omp parallel for collapse(2)
+
 for(int32_t l = 0; l < 8;   ++l){
 
 for(int32_t m = 0; m < 32;   ++m){
