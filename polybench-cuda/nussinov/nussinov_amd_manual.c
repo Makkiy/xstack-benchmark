@@ -219,7 +219,7 @@ for(int32_t w = n; w < (2 * n - 1);   ++w){
   // agg_2e_tmp1.field2 = 1;
   // memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   // memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute parallel for collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(512)
 
 for(int32_t j = 0; j < call;   ++j){
 // #pragma omp parallel for
@@ -287,7 +287,7 @@ void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, d
   maximum = _ZL3maxdd(maximum, upd);
   }
   }
-
+#pragma omp parallel for
 for(int64_t k = (threadIdx_2e_x + n + mul - w); k < j;   ++k){
   maximum = _ZL3maxdd(maximum, (table[(i * n + k)] + table[((k + 1) * n + j)]));
 }
